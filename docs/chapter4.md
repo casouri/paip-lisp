@@ -192,8 +192,8 @@ it.
 
 <a id='page-114'></a>
 
-
-|---|---------------------------------
+| | |
+|---|--------------------------------|
 GPS | **Top-Level Function** <br></br> Solve a goal from a state using a list of operators.
 *state* <br></br> *ops* | **Special Variables** <br></br> The current state: a list of conditions. <br></br> A list of available operators.
 op | **Data Types** <br/> An operation with preconds, add-list and del-list.
