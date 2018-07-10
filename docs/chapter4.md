@@ -194,12 +194,12 @@ it.
 
 | | |
 |---|--------------------------------|
-GPS | **Top-Level Function** <br></br> Solve a goal from a state using a list of operators.
-*state* <br></br> *ops* | **Special Variables** <br></br> The current state: a list of conditions. <br></br> A list of available operators.
-op | **Data Types** <br/> An operation with preconds, add-list and del-list.
-achieve <br/> appropriate-p <br/> apply-op | **Functions** <br/> Achieve an individual goal. <br/> Apply operator to current state. 
-member set-difference union every some | **Selected Common Lisp Functions** <br/> Test if an element is a member of a list. (p. 78) <br/> All elements in one set but not the other. <br/> All elements in either of two sets. <br/> Test if every element of a list passes a test. (p. 62) <br/> Test if any element of a list passes a test. 
-find-all | **Previously Defined Functions** <br/> A list of all matching elements, (p. 101)
+<br/> GPS | **Top-Level Function** <br/> Solve a goal from a state using a list of operators.
+<br/> *state* <br/> *ops* | **Special Variables** <br/> The current state: a list of conditions. <br/> A list of available operators.
+<br/> op | **Data Types** <br/> An operation with preconds, add-list and del-list.
+<br/> achieve <br/> appropriate-p <br/> apply-op | **Functions** <br/> Achieve an individual goal. <br/> Apply operator to current state. 
+<br/> member <br/> set-difference <br/> union <br/> every <br/> some | **Selected Common Lisp Functions** <br/> Test if an element is a member of a list. (p. 78) <br/> All elements in one set but not the other. <br/> All elements in either of two sets. <br/> Test if every element of a list passes a test. (p. 62) <br/> Test if any element of a list passes a test. 
+<br/> find-all | **Previously Defined Functions** <br/> A list of all matching elements, (p. 101)
 
 Figure 4.1: Glossary for the GPS Program 
 
