@@ -7,6 +7,7 @@ Problem Solver
 >There are now in the world machines that think. 
 >
 >—Herbert Simon 
+>
 >Nobel Prize-winning Al researcher 
 
 The General Problem Solver, developed in 1957 by Alan Newell and Herbert Simon, 
