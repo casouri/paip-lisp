@@ -69,7 +69,7 @@ programming project are:
 As our problem description, we will start with a quote from Newell and Simon's 1972 
 book. Human Problem Solving: 
 
-The main methods of GPS jointly embody the heunstic ofmeans-ends analysis. 
+The main methods of GPS jointly embody the heunstic of means-ends analysis. 
 Means-ends analysis is typified by the following kind of common-sense 
 argument: 
 
@@ -77,13 +77,13 @@ I want to take my son to nursery school. What's the difference
 between what I have and what I want? One of distance. What 
 changes distance? My automobile. My automobile won't work. 
 What is needed to make it work? A new battery. What has new 
-battenes? An auto repair shop. I want the repair shop to put in a 
+batteries? An auto repair shop. I want the repair shop to put in a 
 new battery; but the shop doesn't know I need one. What is the 
 difficulty? One of communication. What allows communication? 
-Atelephone... and so on. 
+A telephone... and so on. 
 
 The kind of analysis-classifying things in terms of the functions they serve and 
-oscillating among ends, functions required, andmeans thatperform them-forms 
+oscillating among ends, functions required, and means that perform them-forms 
 the basic system of heuristic of GPS. 
 
 Of course, this kind of analysis is not exactly new. The theory of means-ends 
@@ -91,7 +91,7 @@ analysis was laid down quite elegantly by Aristotle 2300 years earlier in the ch
 entitled "The nature of deliberation and its objects" of the Nicomachean Ethics (Book 
 III. 3,1112b): 
 
-We deliberate not about ends, but about means. For a doctor does not deliberate 
+>We deliberate not about ends, but about means. For a doctor does not deliberate 
 whether he shall heal, nor an orator whether he shall persuade, nor a statesman 
 whether he shall produce law and order, nor does any one else deliberate about 
 his end. They assume the end and consider how and by what means it is attained; 
@@ -137,7 +137,7 @@ follows:
 
 * We can represent the current state of the world—"what I have"—or the goal 
 state—"what I want"—as sets of conditions. Common Lisp doesn't have a data 
-type for sets, but it does have Usts, which can be used to implement sets. Each 
+type for sets, but it does have lists, which can be used to implement sets. Each 
 condition can be represented by a symbol. Thus, a typical goal might be the list 
 of two conditions (rich famous), and a typical current state might be (unknown 
 poor). 
@@ -148,8 +148,8 @@ and tackle a new problem domain.
 of preconditions, and a list of effects. We can place limits on the kinds of 
 possible effects by saying that an effect either adds or deletes a condition from 
 the current state. Thus, the list of effects can be split into an add-list and 
-a delete-list. This was the approach taken by the STRIPS^ implementation of 
-^STRIPS is the Stanford Research Institute Problem Solver, designed by Richard Pikes and 
+a delete-list. This was the approach taken by the Strips implementation of 
+GPS is the Stanford Research Institute Problem Solver, designed by Richard Pikes and 
 NilsNilsson (1971). 
 
 <a id='page-113'></a>
@@ -161,7 +161,7 @@ inefficiency.
 * A complete problem is described to GPS in terms of a starting state, a goal state, 
 and a set of known operators. Thus, GPS will be a function of three arguments. 
 For example, a sample call might be: 
-(GPS '(unknown poor) '(rich famous) list-of-ops) 
+`(GPS '(unknown poor) '(rich famous) list-of-ops)` 
 
 In other words, starting from the state of being poor and unknown, achieve the 
 state of being rich and famous, using any combination of the known operators. 
@@ -192,25 +192,15 @@ it.
 
 <a id='page-114'></a>
 
-Top-Level Function 
-GPS Solve a goal from a state using a list of operators. 
-Special Variables 
-*state* The current state: a list of conditions. 
-*ops* A list of available operators. 
-Data Types 
-op An operation with preconds, add-list and del-list. 
-Functions 
-achieve Achieve an individual goal. 
-appropriate-p Decide if an operator is appropriate for a goal. 
-apply-op Apply operator to current state. 
-Selected Common Lisp Functions 
-member Test if an element is a member of a list. (p. 78) 
-set-difference All elements in one set but not the other. 
-union All elements in either of two sets. 
-every Test if every element of a list passes a test. (p. 62) 
-some Test if any element of a list passes a test. 
-Previously Defined Functions 
-find-all A list of all matching elements, (p. 101) 
+
+-------------------------------------
+GPS | **Top-Level Function** <br></br> Solve a goal from a state using a list of operators.
+*state* <br></br> *ops* | **Special Variables** <br></br> The current state: a list of conditions. <br></br> A list of available operators.
+op | **Data Types** <br/> An operation with preconds, add-list and del-list.
+achieve <br/> appropriate-p <br/> apply-op | **Functions** <br/> Achieve an individual goal. <br/> Apply operator to current state. 
+member set-difference union every some | **Selected Common Lisp Functions** <br/> Test if an element is a member of a list. (p. 78) <br/> All elements in one set but not the other. <br/> All elements in either of two sets. <br/> Test if every element of a list passes a test. (p. 62) <br/> Test if any element of a list passes a test. 
+find-all | **Previously Defined Functions** <br/> A list of all matching elements, (p. 101)
+
 Figure 4.1: Glossary for the GPS Program 
 
 Here is the complete GPS program itself: 
