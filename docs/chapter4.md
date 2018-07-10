@@ -65,7 +65,7 @@ programming project are:
 5. Debug and analyze the resulting program, and repeat the process 
 <a id='page-111'></a>
 
-4.1 Stage 1: Description 
+## 4.1 Stage 1: Description 
 As our problem description, we will start with a quote from Newell and Simon's 1972 
 book. Human Problem Solving: 
 
@@ -130,7 +130,7 @@ appropriateness. However, if we can define these notions better, it seems we won
 need any new notions. Thus, we will arbitrarily decide that the problem description 
 is complete, and move on to the problem specification. 
 
-4.2 Stage 2: Specification 
+## 4.2 Stage 2: Specification 
 At this point we have an idea—admittedly vague—of what it means to solve a problem 
 in GPS. We can refine these notions into representations that are closer to Lisp as 
 follows: 
@@ -183,7 +183,8 @@ means executing the action and updating the current state in term of the operato
 add-list and delete-list. Since our program is just a simulation—it won't 
 be actually driving a car or dialing a telephone—we must be content simply to 
 print out the action, rather than taking any real action. 
-4.3 Stage 3: Implementation 
+
+## 4.3 Stage 3: Implementation 
 The specification is complete enough to lead directly to a complete Common Lisp 
 program. Figure 4.1 summarizes the variables, data types, and functions that make 
 up the GPS program, along with some of the Common Lisp functions used to implement 
@@ -318,7 +319,7 @@ a message to that effect and changing the state of the world by deleting what wa
 the delete-list and adding what was in the add-Hst. apply-op is also a predicate; it 
 returns t only when the operator can be applied. 
 
-4.4 Stage 4: Test 
+## 4.4 Stage 4: Test 
 This section will define a list of operators applicable to the "driving to nursery school" 
 domain and will show how to pose and solve some problems in that domain. First, 
 we need to construct the list of operators for the domain. The defstruct form for the 
@@ -438,7 +439,8 @@ Finally, the third example is much more direct; the initial state specifies that
 car works, so the driving operator can be applied immediately. 
 
 <a id='page-119'></a>
-4.5 Stage 5: Analysis, or ''We Lied about the C 
+
+## 4.5 Stage 5: Analysis, or ''We Lied about the C 
 In the sections that follow, we examine the question of just how general this General 
 Problem Solver is. The next four sections point out limitations of our version of GPS, 
 and we will show how to correct these limitations in a second version of the program. 
@@ -451,7 +453,7 @@ more about the problem area rather than to meet a clearly defined specification.
 is in contrast to a more traditional notion of programming, where the problem is 
 completely specified before the first line of code is written. 
 
-4.6 The Running Around the Block Problem 
+## 4.6 The Running Around the Block Problem 
 Representing the operator "driving from home to school" is easy: the precondition 
 and delete-list includes being at home, and the add-list includes being at school. But 
 suppose we wanted to represent "running around the block." There would be no 
@@ -460,7 +462,7 @@ so, there would be no reason ever to apply the operator. Perhaps the add-list sh
 contain something like "got some exercise" or "feel tired," or something more general 
 like "experience running around the block." We will return to this question later. 
 
-4.7 The Clobbered Sibling Goal Problem 
+## 4.7 The Clobbered Sibling Goal Problem 
 Consider the problem of not only getting the child to school but also having some 
 money left over to use for the rest of the day. GPS can easily solve this problem from 
 the following initial condition: 
@@ -524,7 +526,8 @@ clobbers brother goal" or PCBG. I prefer to be gender neutral, even at the risk 
 labeled a historical revisionist. 
 
 <a id='page-121'></a>
-4 . 8 The Leaping before You Look Problem 
+
+## 4.8 The Leaping before You Look Problem 
 
 Another way to address the "prerequisite clobbers sibling goal" problem is just to be 
 more careful about the order of goals in a goal list. If we want to get the kid to school 
@@ -557,7 +560,7 @@ would be to replace the single global *state* with distinct local state variable
 that a new variable is created for each new state. This alternative is a good one for 
 another, independent reason, as we shall see in the next section. 
 
-4.9 The Recursive Subgoal Problem 
+## 4.9 The Recursive Subgoal Problem 
 In our simulated nursery school world there is only one way to find out a phone 
 number: to look it up in the phone book. Suppose we want to add an operator for 
 finding out a phone number by asking someone. Of course, in order to ask someone 
@@ -628,7 +631,7 @@ a problem in terms of itself. One way to avoid the problem is to have achi eve k
 track of all the goals that are being worked on and give up if it sees a loop in the 
 goal stack. 
 
-4.10 The Lack of Intermediate Information 
+## 4.10 The Lack of Intermediate Information 
 Problem 
 When GPS fails to find a solution, it just returns nil. This is annoying in cases where 
 the user expected a solution to be found, because it gives no information about the 
@@ -705,7 +708,8 @@ the function dbg -1 ndent is defined:
 (apply #*format *debug-io* format-string args))) 
 
 <a id='page-125'></a>
-4.11 GPS Version 2: A More General 
+
+## 4.11 GPS Version 2: A More General 
 Problem Solver 
 At this point we are ready to put together a new version of GPS with solutions for 
 the "running around the block," "prerequisite clobbers sibling goal," "leaping before 
@@ -1083,7 +1087,7 @@ action:
 
 > (gps '(son-at-home) '(son-at-home)) => ((START)) 
 
-4.12 The New Domain Problem: Monkey 
+## 4.12 The New Domain Problem: Monkey 
 and Bananas 
 To show that GPS is at all general, we have to make it work in different domains. We 
 will start with a "classic" AI problem.^ Imagine the following scenario: a hungry 
@@ -1154,7 +1158,7 @@ a different set of operators.
 
 <a id='page-134'></a>
 
-4.13 The Maze Searching Domain 
+## 4.13 The Maze Searching Domain 
 Now we will consider another "classic" problem, maze searching. We will assume a 
 particular maze, diagrammed here. 
 
@@ -1280,7 +1284,7 @@ remember to include the starting point.
 
 > (equal (find-path 1 25) (reverse (find-path 25 1))) => . 
 
-4.14 The Blocks World Domain 
+## 4.14 The Blocks World Domain 
 
 Another domain that has attracted more than its share of attention in AI circles is 
 the blocks world domain. Imagine a child's set of building blocks on a table top. 
@@ -1566,7 +1570,7 @@ goals can solve the conjunction of the two goals. This is a surprising fact, and
 example has come to be known as "the Sussman anomaly."^ We will return to this 
 problem in chapter 6. 
 
-4.15 Stage 5 Repeated: Analysis of Version 2 
+## 4.15 Stage 5 Repeated: Analysis of Version 2 
 We have shown that GPS is extensible to multiple domains. The main point is that 
 we didn't need to change the program itself to get the new domains to work; we 
 just changed the list of operators passed to GPS. Experience in different domains 
@@ -1579,7 +1583,8 @@ many children thought of it earlier but did not recognize that it was hard." The
 named after Gerald Sussman because he popularized it in Sussman 1973. 
 
 <a id='page-143'></a>
-4.16 The Not Looking after You Don^t 
+
+## 4.16 The Not Looking after You Don^t 
 Leap Problem 
 We solved the "leaping before you look" problem by introducing variables to hold a 
 representation of possible future states, rather than just a single variable representing 
@@ -1652,7 +1657,7 @@ one ordering-achieving son - at - school and then trying to protect it while ach
 have - money—then we would not find the solution. David Warren's WARPLAN planner 
 makes good use of the idea of protected goals. 
 
-4.17 The Lack of Descriptive Power Problem 
+## 4.17 The Lack of Descriptive Power Problem 
 It would be a lot more economical, in the maze domain, to have one operator that 
 says we can move from here to there if we are at "here," and if there is a connection 
 from "here" to "there." Then the input to a particular problem could list the valid 
@@ -1695,7 +1700,7 @@ needed several preconditions satisfied was chosen instead. Or we may be satisfie
 with a partial solution, if a complete solution is impossible or too expensive. We may 
 also want to take the cost (and time) of computation into account. 
 
-4.18 The Perfect Information Problem 
+## 4.18 The Perfect Information Problem 
 All the operators we have seen so far have unambiguous results; they add or delete 
 certain things from the current state, and GPS always knows exactly what they are 
 going to do. In the real world, things are rarely so cut and dried. Going back to the 
@@ -1709,7 +1714,7 @@ the program considered the driving operator. In the real world, we are seldom th
 careful; we get in the car, and only when it doesn't start do we consider the possibility 
 of a dead battery. 
 
-4.19 The Interacting Goals Problem 
+## 4.19 The Interacting Goals Problem 
 People tend to have multiple goals, rather than working on one at a time. Not only do 
 I want to get the kid to nursery school, but I want to avoid getting hit by another car, 
 get to my job on time, get my work done, meet my friends, have some fun, continue 
@@ -1737,7 +1742,7 @@ reasonable number of goals to a reasonable degree, while abandoning or postponin
 other goals. GPS only knows success and failure, and thus has no way of maximizing 
 partial success. 
 
-4.20 The End of GPS 
+## 4.20 The End of GPS 
 These last four sections give a hint as to the scope of the limitations of GPS. In fact, it 
 is not a very general problem solver at all. Itis general in the sense that the algorithm 
 is not tied to a particular domain; we can change domain by changing the operators. 
@@ -1799,7 +1804,7 @@ involved an investigation and formalization of the problem-solving process. By t
 measure, our reconstruction of GPS is a success to the degree in which it leads the 
 reader to a better understanding of the issues. 
 
-4.21 History and References 
+## 4.21 History and References 
 The original GPS is documented in Newell and Simon's 1963 paper and in their 1972 
 book. Human Problem Solving, as well as in Ernst and Newell 1969. The implementation 
 in this chapter is based on the STRIPS program (Fikes and Nilsson 1971). 
@@ -1817,7 +1822,8 @@ operations rather than as a strictly ordered sequence of situations. David Chapm
 TWEAK synthesizes and formalizes the state of the art in planning as of 1987. 
 All of these papers-an d quite a few other important planning papers-ar e 
 reprinted in Allen, Hendler, and Tate 1990. 
-4.22 Exercises 
+
+## 4.22 Exercises 
 &#9635; Exercise 4.1 [m] It is possible to implement dbg using a single call to format. Can 
 you figure out the format directives to do this? 
 
@@ -1862,7 +1868,7 @@ you allow for the possibility of variables that remain unbound as long as possib
 &#9635; Exercise 4.7 [d] Speculate on the design of a planner that can address the Perfect 
 Information and Interacting Goals problems. 
 
-4.23 Answers 
+## 4.23 Answers 
 Answer 4.1 In this version, the format string " ~&~V@T~?" breaks down as follows: 
 
 means go to a fresh line; "~V@T" means insert spaces (@T) but use the next 
