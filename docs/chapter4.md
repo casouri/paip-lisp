@@ -4,15 +4,15 @@
 GPS: The Genera 
 Problem Solver 
 
-There are now in the world machines that think. 
+>There are now in the world machines that think. 
 
 —Herbert Simon 
+
 Nobel Prize-winning Al researcher 
 
-I I 1 he General Problem Solver, developed in 1957 by Alan Newell and Herbert Simon, em-
-I bodied a grandiose vision: a single computer program that could solve any problem, 
-
-JL given a suitable description of the problem. GPS caused quite a stir when it was introduced, 
+The General Problem Solver, developed in 1957 by Alan Newell and Herbert Simon, 
+embodied a grandiose vision: a single computer program that could solve any problem, 
+given a suitable description of the problem. GPS caused quite a stir when it was introduced, 
 and some people in AI felt it would sweep in a grand new era of intelligent machines. 
 Simon went so far as to make this statement about his creation: 
 
