@@ -215,6 +215,7 @@ Figure 4.1: Glossary for the GPS Program
 
 Here is the complete GPS program itself: 
 
+```lisp
 (defvar *state* nil "The current state: a list of conditions.") 
 
 (defvar *ops* nil "A list of available operators.") 
@@ -237,9 +238,10 @@ or if there is an appropriate op for it that is applicable."
 (defun appropriate-p (goal op) 
 "An op is appropriate to a goal if it is in its add list." 
 (member goal (op-add-list op))) 
-
+```
 <a id='page-115'></a>
 
+```lisp
 (defun apply-op (op) 
 "Print a message and update *state* if op is applicable." 
 (when (every #*achieve (op-preconds op)) 
@@ -248,6 +250,7 @@ or if there is an appropriate op for it that is applicable."
 (setf *state* (set-difference *state* (op-del-list op))) 
 (setf *state* (union *state* (op-add-list op))) 
 t)) 
+```
 
 We can see the program is made up of seven definitions. These correspond to the 
 seven items in the specification above. In general, you shouldn't expect such a 
@@ -260,9 +263,11 @@ that have the side effect of adding new definitions to the Lisp environment.
 The two def var forms, repeated below, declare special variables named *state* 
 and *ops*, which can then be accessed from anywhere in the program. 
 
+```lisp
 (defvar *state* nil "The current state: a list of conditions.") 
 
 (defvar *ops* nil "A list of available operators.") 
+```
 
 The defstruct form defines a structure called an op, which has slots called acti on, 
 preconds, add -1 i st, and del -1 i st. Structures in Common Lisp are similar to structures 
@@ -273,6 +278,7 @@ op-del -1 ist. The defstruct also defines a copier function, copy-op, a predicat
 op-p, and setf definitions for changing each slot. None of those are used in the GPS 
 program. Roughly speaking, it is as if the defstruct form 
 
+```lisp
 (defstruct op "An operation" 
 (action nil) (preconds nil) (add-list nil) (del-list nil)) 
 
@@ -287,13 +293,16 @@ expanded into the following definitions:
 (defun op-del-list (op) (elt op 4)) 
 
 (defun copy-op (op) (copy-seq op)) 
+```
 
 <a id='page-116'></a>
 
+```lisp
 (defun op-p (op) 
 (and (vectorp op) (eq (elt op 0) Op))) 
 
 (setf (documentation 'op 'structure) "An operation") 
+```
 
 Next in tlie GPS program are four function definitions. The main function, GPS, is 
 passed three arguments. The first is the current state of the world, the second the 
@@ -325,10 +334,12 @@ domain and will show how to pose and solve some problems in that domain. First,
 we need to construct the list of operators for the domain. The defstruct form for the 
 type op automatically defines the function make - op, which can be used as follows: 
 
+```lisp
 (make-op :action 'drive-son-to-school 
 ipreconds *(son-at-home car-works) 
 :add-list '(son-at-school) 
 :del-list '(son-at-home)) 
+```
 
 This expression returns an operator whose action is the symbol drive-son-to-school 
 and whose preconditions, add-list and delete-list are the specified lists. The intent 
@@ -355,6 +366,7 @@ battery, telling the repair shop the problem, and telephoning the shop. We can f
 the "and so on" by adding operators for looking up the shop's phone number and for 
 giving the shop money: 
 
+```lisp
 (defparameter *school-ops* 
 (list 
 
@@ -383,6 +395,7 @@ ipreconds '(have-phone-book)
 ipreconds '(have-money) 
 :add-list '(shop-has-money) 
 :del-list '(have-money)))) 
+```
 
 The next step is to pose some problems to GPS and examine the solutions. Following 
 are three sample problems. In each case, the goal is the same: to achieve the single 
@@ -676,6 +689,7 @@ flexibility. For example, debugging output could be directed to a separate windo
 or it could be copied to a file. Second, the function fresh -1i ne advances to the next 
 line of output, unless the output stream is already at the start of the line. 
 
+```lisp
 (defvar *dbg-ids* nil "Identifiers used by dbg") 
 
 (defun dbg (id format-string &rest args) 
@@ -706,6 +720,7 @@ the function dbg -1 ndent is defined:
 (fresh-line *debug-io*) 
 (dotimes (i indent) (princ " " *debug-io*)) 
 (apply #*format *debug-io* format-string args))) 
+```
 
 <a id='page-125'></a>
 
@@ -759,6 +774,7 @@ run -a round - bl ock)), and it would execute the run -a round - bl ock operator
 satisfying the goal. The following code defines a new function, op, which builds 
 operators that include the message in their add-list. 
 
+```lisp
 (defun executing-p (x) 
 "Is X of the form: (executing ...) ? " 
 (starts-with . 'executing)) 
@@ -785,6 +801,7 @@ Operators built by op will be correct, but we can convert existing operators usi
 convert-op directly: 
 
 (mapc #'convert-op ^school-ops*) 
+```
 
 This is an example of exploratory programming: instead of starting all over when 
 we discover a limitation of the first version, we can use Lisp to alter existing data 
@@ -804,6 +821,7 @@ failure, and non-nil for success. In general, it is a good idea to have a progra
 a meaningful value rather than print that value, if there is the possibility that some 
 other program might ever want to use the value. 
 
+```lisp
 (defvar *ops* nil "A list of available operators.") 
 
 (defstruct op "An operation" 
@@ -812,6 +830,7 @@ other program might ever want to use the value.
 (defun GPS (state goals &optional (*ops* *ops*)) 
 "General Problem Solver: from state, achieve goals using *ops*." 
 (remove-if #'atom (achieve-all (cons '(start) state) goals nil))) 
+```
 
 The first major change in version 2 is evident from the first line of the program: there 
 is no *state* variable. Instead, the program keeps track of local state variables. 
@@ -872,6 +891,7 @@ condition is already in the goal stack, then there is no sense continuing—we w
 stuck in an endless loop—so achi eve returns nil. Otherwise, achi eve looks through 
 the list of operators, trying to find one appropriate to apply. 
 
+```lisp
 (defun achieve-all (state goals goal-stack) 
 "Achieve each goal, and make sure they still hold at the end." 
 (let ((current-state state)) 
@@ -892,6 +912,7 @@ or if there is an appropriate op for it that is applicable."
 ((member-equal goal goal-stack) nil) 
 (t (some #'(lambda (op) (apply-op state goal op goal-stack)) 
 (find-all goal *ops* :test #*appropriate-p))))) 
+```
 
 The goal ((executing run-around-block)) is a list of one condition, where the 
 condition happens to be a two-element list. Allowing lists as conditions gives us 
@@ -907,8 +928,10 @@ one step further and defined member-situation, a function to test if a condition
 true in a situation. This would allow the user to change the matching function from 
 eql to equal, and to anything else that might be useful. 
 
+```lisp
 (defun member-equal (item list) 
 (member item list :test #*equal)) 
+```
 
 The function apply-op, which used to change the state irrevocably and print a message 
 reflecting this, now returns the new state instead of printing anything. It first 
@@ -917,6 +940,7 @@ operator. If it is possible to arrive at such a state, then apply-op returns a n
 derived from this state by adding what's in the add-list and removing everything in 
 the delete-list. 
 
+```lisp
 (defun apply-op (state goal op goal-stack) 
 "Return a new, transformed state if op is applicable." 
 (dbg-indent :gps (length goal-stack) "Consider: ~a" (op-action op)) 
@@ -936,6 +960,7 @@ stateZ)
 (defun appropriate-p (goal op) 
 "An op is appropriate to a goal if it is in its add-list." 
 (member-equal goal (op-add-list op))) 
+```
 
 There is one last complication in the way we compute the new state. In version 
 1 of GPS, states were (conceptually) unordered sets of conditions, so we could use 
@@ -950,6 +975,7 @@ is to be used for a series of problems.
 
 <a id='page-130'></a>
 
+```lisp
 (defun use (oplist) 
 
 "Use oplist as the default list of operators." 
@@ -957,6 +983,7 @@ Return something useful, but not too verbose:
 the number of operators, 
 
 (length (setf *ops* oplist))) 
+```
 
 Calling use sets the parameter *ops*, so that it need not be specified on each call 
 to GPS. Accordingly, in the definition of GPS itself the third argument, *ops*, is now 
@@ -976,6 +1003,7 @@ a local variable and explicitly sets and resets the special variable *ops*. Clea
 the idiom of binding a special variable is more concise, and while it can be initially 
 confusing, it is useful once understood. 
 
+```lisp
 (defun GPS (state goals &optional (*ops* *ops*)) 
 "General Problem Solver: from state, achieve goals using *ops*." 
 (remove-if #'atom (achieve-all (cons '(start) state) goals nil))) 
@@ -992,6 +1020,7 @@ goalsnil))))
 
 (setf *ops* old-ops) 
 result))) 
+```
 
 Now let's see how version 2 performs. We use the list of operators that includes the 
 "asking the shop their phone number" operator. First we make sure it will still do the 
@@ -1104,6 +1133,7 @@ define the operators as follows:
 ^Originally posed by Saul Amarel (1968). 
 
 <a id='page-133'></a>
+```lisp
 (defparameter *banana-ops* 
 (list 
 
@@ -1136,6 +1166,7 @@ idel-list '(has-balD)
 ipreconds '(has-bananas) 
 ladd-list '(empty-handed not-hungry) 
 idel-list '(has-bananas hungry)))) 
+```
 
 Using these operators, we could pose the problem of becoming not-hungry, given 
 the initial state of being at the door, standing on the floor, holding the ball, hungry, 
@@ -1162,16 +1193,19 @@ a different set of operators.
 Now we will consider another "classic" problem, maze searching. We will assume a 
 particular maze, diagrammed here. 
 
+```
 1 2 3 4 5 
 6 7 8 9 10 
 11 12 13 14 15 
 16 17 18 19 20 
 21 22 23 24 25 
+```
 
 It is much easier to define some functions to help build the operators for this 
 domain than it would be to type in all the operators directly. The following code 
 defines a set of operators for mazes in general, and for this maze in particular: 
 
+```lisp
 (defun make-maze-ops (pair) 
 "Make maze ops in both directions" 
 (list (make-maze-op (first pair) (second pair)) 
@@ -1192,6 +1226,7 @@ ipreconds '((at .here))
 '((1 2) (2 3) (3 4) (4 9) (9 14) (9 8) (8 7) (7 12) (12 13) 
 (12 11) (11 6) (11 16) (16 17) (17 22) (21 22) (22 23) 
 (23 18) (23 24) (24 19) (19 20) (20 15) (15 10) (10 5) (20 25)))) 
+```
 
 Note the backquote notation, (It is covered in section 3.2, [page 67](chapter3.md#page-67). 
 We can now use this list of operators to solve several problems with this maze. 
@@ -1238,14 +1273,17 @@ of what's really happening—there's bound to be trouble. What we really want to
 is not to remove atoms but to find all elements that denote actions. The code below 
 says what we mean: 
 
+```lisp
 (defun GPS (state goals &optional (*ops* *ops*)) 
 "General Problem Solver: from state, achieve goals using *ops*." 
 (find-all-if #*action-p 
 
 (achieve-all (cons '(start) state) goals nil))) 
+```
 
 <a id='page-136'></a>
 
+```lisp
 (defun action-p (x) 
 "Is . something that is (start) or (executing ...)? " 
 (or (equal . '(start)) (executing-p x))) 
@@ -1269,6 +1307,7 @@ and then manipulating the results:
 (defun destination (action) 
 "Find the Y in (executing (move from X to Y))" 
 (fifth (second action))) 
+```
 
 The function f i nd - path calls GPS to get the resul ts. If this is ni 1, there is no answer, 
 but if it is not, then take the rest of results (in other words, ignore the (START) part). 
@@ -1297,6 +1336,7 @@ can be taken in this world is to move a single block that has nothing on top of 
 to the top of another block or onto the table that represents the block world. We will 
 create an operator for each possible block move. 
 
+```lisp
 (defun make-block-ops (blocks) 
 (let ((ops nil)) 
 (dolist (a blocks) 
@@ -1324,6 +1364,7 @@ idel-list (move-ons a c b)))
 (if (eq b 'table) 
 *((,a on ,c)) 
 *((.a on ,c) (space on ,b)))) 
+```
 
 Now we try these operators out on some problems. The simplest possible problem 
 is stacking one block on another: 
@@ -1414,6 +1455,7 @@ on A. The "prerequisite clobbers sibling goal" situation is recognized, but the 
 doesn't do anything about it. One thing we could do is try to vary the order of the 
 conjunct goals. That is, we could change achieve-al 1 as follows: 
 
+```lisp
 (defun achieve-all (state goals goal-stack) 
 "Achieve each goal, trying several orderings." 
 (some #'(lambda (goals) (achieve-each state goals goal-stack)) 
@@ -1436,6 +1478,7 @@ current-state)))
 (if (> (length 1) 1) 
 (1 ist 1 (reverse 1)) 
 (list 1))) 
+```
 
 Now we can represent the goal either way, and we'll still get an answer. Notice that 
 we only consider two orderings: the order given and the reversed order. Obviously, 
@@ -1490,6 +1533,7 @@ unfulfilled preconditions are tried first. In particular, this means that operat
 all preconditions filled would always be tried before other operators. To implement 
 this approach, we change achi eve: 
 
+```lisp
 (defun achieve (state goal goal-stack) 
 "A goal is achieved if it already holds, 
 or if there is an appropriate op for it that is applicable." 
@@ -1497,9 +1541,11 @@ or if there is an appropriate op for it that is applicable."
 (cond ((member-equal goal state) state) 
 
 ((member-equal goal goal-stack) nil) 
+```
 
 <a id='page-141'></a>
 
+```lisp
 (t (some #'(lambda (op) (apply-op state goal op goal-stack)) 
 (appropriate-ops goal state))))) 
 
@@ -1512,6 +1558,7 @@ sorted by the number of unfulfilled preconditions."
 (count-if #'(lambda (precond) 
 (not (member-equal precond state))) 
 (op-preconds op))))) 
+```
 
 Now we get the solutions we wanted: 
 
@@ -1669,6 +1716,7 @@ operator to push any "pushable" object from one location to a nearby one, as lon
 as there is no intervening obstacle. The conclusion is that we would like to have 
 variables in the operators, so we could say something like: 
 
+```lisp
 (op '(push X from A to B) 
 
 :preconds '((monkey at A) (X at A) (pushable X) (path A B)) 
@@ -1676,6 +1724,7 @@ variables in the operators, so we could say something like:
 :add-list '((monkey at B) (X at B)) 
 
 :del-list '((monkey at A) (X at A))) 
+```
 
 Often we want to characterize a state in terms of something more abstract than a 
 list of conditions. For example, in solving a chess problem, the goal is to have the 
@@ -1876,17 +1925,20 @@ argument (V) to get the number of spaces. The " ~?" is the indirection operator:
 the next argument as a format string, and the argument following that as the list of 
 arguments for the format string. 
 
+```lisp
 (defun dbg-indent (id indent format-string &rest args) 
 "Print indented debugging info if (DEBUG ID) has been specified." 
 (when (member id *dbg-ids*) 
 
 (format *debug-io* "~&~v@T~?" (* 2 indent) format-string args))) 
+```
 
 <a id='page-150'></a>
 
 Answer 4.2 Here is one solution. The sophisticated Lisp programmer should also 
 see the exercise on [page 680](chapter19.md#page-680). 
 
+```lisp
 (defun permutations (bag) 
 
 "Return a list of all the permutations of the input." 
@@ -1906,4 +1958,5 @@ Do this for all possible e to generate all permutations,
 (permutations 
 (remove e bag :count 1 :test #'eq)))) 
 bag))) 
+```
 
